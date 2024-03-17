@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics.Contracts;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -10,7 +11,7 @@ namespace Classes.ClassesEcole
     {
         private string nom;
         private int anneeCreation;
-        private Dictionary<int ,Contact> contact  = new Dictionary<int,Contact>();
+        private Dictionary<int, Contact> contacts  = new Dictionary<int,Contact>();
 
         public Ecole(string nom, int anneeCreation, Dictionary<int, Contact> contacts)
         {
@@ -22,53 +23,71 @@ namespace Classes.ClassesEcole
         public string AfficheTous()
         {
             string count = "";
-            foreach(Contact contact in contact.Values)
+            foreach(Contact contact in contacts.Values)
             {
                 count += contact.ToString();
                 
             }
             return count;
         }
-        /*public double AncienneteMoyenne()
+
+        public double AncienneteMoyenne()
         {
-            
-        }*/
-        /*public bool EstEtudiant(Contact contact)
+            int moyenne = 0;
+            foreach (Contact contact in contacts.Values)
+            {
+                moyenne += contact.AnneeArrivee;
+            }
+            return moyenne / contacts.Count;
+        }
+
+        public bool EstEtudiant(Contact contact)
         {
-            
-        }*/
+            if (contact is Etudiant) return true;
+            else return false;
+        }
 
         public int NbContacts()
         {
-            return contact.Count;
+            return contacts.Count;
         }
 
-        /*public double MoyenneEtudiantRegulier()
+        public double MoyenneEtudiantRegulier()
         {
-            
-        }*/
-        
+            double moyenne = 0;
+            int nbEtudiantsReg = 0;
+            foreach (Contact contact in Contacts.Values)
+            {
+                if (contact is EtudiantRegulier EtudiantReg)
+                {
+                    moyenne += EtudiantReg.NoteMoyenne;
+                    nbEtudiantsReg ++;
+                }
+            }
+            return moyenne / nbEtudiantsReg;
+        }
+
         public void AjouterContact(Contact contact)
         {
             if (!ExisteContact(contact))
             {
-                this.contact.Add(contact.Matricule, contact);
+                this.contacts.Add(contact.Matricule, contact);
             }
         }
 
-        /*public int NbEtudiants()
+        public int NbEtudiants()
         {
-            
-        }*/
+            return 0;
+        }
 
         public bool ExisteContact(Contact contact)
         {
-            return this.contact.ContainsKey(contact.Matricule);
+            return this.contacts.ContainsKey(contact.Matricule);
         }
 
         
         public string Nom { get => nom; }
         public int AnneeCreation { get => anneeCreation; }
-        internal Dictionary<int, Contact> Contacts { get => contact;  private set => contact = value; }
+        internal Dictionary<int, Contact> Contacts { get => contacts;  private set => contacts = value; }
     }
 }

@@ -14,16 +14,23 @@ namespace EcoleTLN
             try
             {
                 Ecole ecoleTLN = new Ecole("écoleTLN", 1980, CreerContacts());
-                Console.WriteLine("---- Ajout d'une collection de contact ----");
+                Console.WriteLine("Parmi les " + ecoleTLN.NbContacts() + " personnes de l'EcoleTLN " + ecoleTLN.NbEtudiants() +
+                    " sont des étudiants \nIls sont à l'école depuis en moyenne " + ecoleTLN.AncienneteMoyenne());
+                
                 Console.WriteLine("----  Affichage Tous ----");
                 Console.WriteLine(ecoleTLN.AfficheTous());
                 Console.WriteLine("---- Ajout d'un contact ----");
+                Console.WriteLine("---- Ajout d'une collection de contacts ----");
+
                 Contact contact = new Contact(1789, "Montes Quieu", 2021);
                 ecoleTLN.AjouterContact(contact);
-                Console.WriteLine("---- Vérifications ----");
-                Console.WriteLine("Nb contact : {0}", ecoleTLN.NbContacts());
-                List<int> matric = new List<int> { 1200, 9999, 1789, 2222 };
 
+                Console.WriteLine("---- Vérifications ----");
+                Console.WriteLine("Nb contacts : {0}", ecoleTLN.NbContacts());
+                
+                ecoleTLN.ExisteContact(contact);
+
+                Console.WriteLine(ecoleTLN.EstEtudiant(contact));
 
             }
             catch (Exception ex)
